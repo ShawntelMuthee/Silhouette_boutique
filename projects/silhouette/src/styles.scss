@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+  --wine: #770737;
+  --deep-wine: #4A0322;
+  --ivory: #F9F6EE;
+  --sage: #8A9A5B;
+  --ink: #241016;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background-color: var(--ivory);
+  color: var(--ink);
+}
+
