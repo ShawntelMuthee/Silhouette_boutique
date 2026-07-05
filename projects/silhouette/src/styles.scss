@@ -18,8 +18,19 @@ body {
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --sidebar-bg: rgba(119, 7, 55, 0.88);
+  --sidebar-blur: 22px;
+  --sidebar-saturate: 1.2;
+  --accent-mint: #AFE1AF;
+  --separator: rgba(255,255,255,.12);
+  --font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Prevent background scroll when sidebar is open */
+.lock-scroll {
+  overflow: hidden !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

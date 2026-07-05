@@ -1,0 +1,51 @@
+<div class="overlay" *ngIf="isOpen" [@overlayFade] (click)="close()" aria-hidden="true"></div>
+<aside class="sidebar" *ngIf="isOpen" [@sidebarSlide]>
+  <!-- Watermark -->
+  <div class="watermark"><img src="assets/logo-mark.svg" alt="Silhouette watermark" /></div>
+  <header class="sidebar-header">
+    <nav class="tabs">
+      <button class="tab" [class.active]="activeTab==='shop'" (click)="switchTab('shop')">SHOP</button>
+      <button class="tab" [class.active]="activeTab==='explore'" (click)="switchTab('explore')">EXPLORE</button>
+      <button class="close-btn" (click)="close()" aria-label="Close menu">×</button>
+    </nav>
+  </header>
+
+  <section class="content" [@tabSwitch]="activeTab">
+    <!-- SHOP Tab -->
+    <ng-container *ngIf="activeTab==='shop'">
+        <ul class="menu-list">
+          <li class="item">All Products</li>
+          <li class="item">New Arrivals</li>
+          <li class="item">Sleepwear</li>
+          <li class="item">Gymwear</li>
+          <li class="item">Innerwear</li>
+          <li class="item">Maternity Wear</li>
+          <li class="item">Medical Scrubs</li>
+          <li class="item">Bedspread &amp; Duvets</li>
+        <li class="item">My Account</li>
+        <li class="item">Wishlist</li>
+        <li class="item">My Cart</li>
+        <li class="item social-icons">
+          <span class="social-icon instagram" aria-label="Instagram"></span>
+          <span class="social-icon tiktok" aria-label="TikTok"></span>
+          <span class="social-icon facebook" aria-label="Facebook"></span>
+          <span class="social-icon whatsapp" aria-label="WhatsApp"></span>
+        </li>
+      </ul>
+    </ng-container>
+    <!-- EXPLORE Tab -->
+    <ng-container *ngIf="activeTab==='explore'">
+      <ul class="menu-list">
+        <li class="item">On Offer</li>
+        <li class="item">Packages</li>
+        <li class="item">Delivery Details</li>
+
+
+      </ul>
+    </ng-container>
+  </section>
+
+
+
+
+</aside>
