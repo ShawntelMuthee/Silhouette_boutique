@@ -1,0 +1,199 @@
+@use 'styles/variables' as *;
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: $z-preloader;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-black;
+  overflow: hidden;
+  will-change: opacity;
+
+  &--reduced {
+    .preloader__glow,
+    .preloader__dust,
+    .preloader__sand,
+    .preloader__crt {
+      display: none;
+    }
+  }
+
+  &--exiting {
+    .preloader__glow {
+      animation: none;
+      opacity: 0.35;
+      transform: scale(1.6);
+      transition: opacity 300ms ease, transform 300ms ease;
+    }
+  }
+}
+
+.preloader__dust {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.preloader__stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(24px, 5vw, 48px);
+}
+
+.preloader__hourglass-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(64px, 18vw, 120px);
+  height: clamp(76px, 22vw, 142px);
+  transform-origin: center center;
+  will-change: transform;
+
+  &--flipping {
+    filter: drop-shadow(0 0 12px rgba($color-white, 0.2));
+  }
+}
+
+.preloader__glow {
+  position: absolute;
+  inset: -30%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba($color-white, 0.14) 0%, transparent 70%);
+  opacity: $glow-opacity-min;
+  animation: glow-breathe $glow-breath-duration ease-in-out infinite;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.preloader__hourglass {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.preloader__sand {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: calc(100% + 16px);
+  height: calc(100% + 16px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+.preloader__logo {
+  font-family: $logo-font-family;
+  font-size: clamp(10px, 2.8vw, 16px);
+  font-weight: 400;
+  letter-spacing: $logo-letter-spacing;
+  color: $color-white;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  will-change: transform;
+  user-select: none;
+}
+
+.preloader__crt {
+  position: absolute;
+  inset: 0;
+  z-index: $z-crt;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.preloader__scanlines {
+  position: absolute;
+  inset: 0;
+  opacity: $crt-opacity;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba($color-white, 0.03) 2px,
+    rgba($color-white, 0.03) 4px
+  );
+}
+
+.preloader__grain {
+  position: absolute;
+  inset: -50%;
+  opacity: $crt-opacity * 0.8;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  animation: grain-shift 0.5s steps(2) infinite;
+  mix-blend-mode: overlay;
+}
+
+.preloader__vignette {
+  position: absolute;
+  inset: 0;
+  opacity: $crt-opacity * 1.2;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba($color-black, 0.6) 100%);
+}
+
+@keyframes glow-breathe {
+  0%,
+  100% {
+    opacity: $glow-opacity-min;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: $glow-opacity-max;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes grain-shift {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-2%, -1%);
+  }
+
+  100% {
+    transform: translate(1%, 2%);
+  }
+}
+
+@media (max-width: 360px) {
+  .preloader__logo {
+    letter-spacing: 8px;
+  }
+}
+
+@media (min-width: $breakpoint-4k) {
+  .preloader__hourglass-wrap {
+    width: 160px;
+    height: 190px;
+  }
+
+  .preloader__logo {
+    font-size: 20px;
+    letter-spacing: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader__glow,
+  .preloader__grain {
+    animation: none;
+  }
+}

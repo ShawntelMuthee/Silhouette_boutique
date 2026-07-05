@@ -1,9 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "cli": {
-    "packageManager": "npm"
-  },
   "newProjectRoot": "projects",
   "projects": {
     "silhouette": {
@@ -20,7 +17,10 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": "dist/silhouette",
+            "index": "projects/silhouette/src/index.html",
             "browser": "projects/silhouette/src/main.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/silhouette/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -38,11 +38,6 @@
                   "type": "initial",
                   "maximumWarning": "500kB",
                   "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
                 }
               ],
               "outputHashing": "all"
@@ -68,9 +63,24 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/silhouette/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/silhouette/public"
+              }
+            ],
+            "styles": ["projects/silhouette/src/styles.scss"]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

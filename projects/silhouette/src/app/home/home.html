@@ -1,61 +1,12 @@
-<app-navbar></app-navbar>
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-left">
-      <p class="eyebrow">New season · Limited drop</p>
-      <h1 class="hero-title">
-        @for (letter of titleLetters; track letter) {
-          <span class="letter">{{ letter }}</span>
-        }
-      </h1>
-      <p class="hero-description">
-        Discover timeless pieces crafted with care for your everyday elegance.
-      </p>
-      <div class="hero-buttons">
-        <button class="btn btn-primary">Shop new arrivals</button>
-        <button class="btn btn-outline">View collections</button>
-      </div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-visual">
-        <div class="sand-dots">
-          @for (i of [1,2,3,4,5]; track i) {
-            <div class="dot" [class]="'dot-' + i"></div>
-          }
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">1,200+</div>
-        <div class="stat-label">Pieces curated</div>
-      </div>
-    </div>
-  </div>
-  <div class="divider">
-    <svg viewBox="0 0 100 10" preserveAspectRatio="none">
-      <path d="M0,5 Q25,0 50,5 T100,5" stroke="currentColor" fill="none" stroke-width="1" />
-    </svg>
+<section class="home">
+  <div class="home__content">
+    <p class="home__eyebrow">Carol's Boutique</p>
+    <h1 class="home__title">SILHOUETTE</h1>
+    <p class="home__tagline">Premium fashion, reimagined.</p>
   </div>
 </section>
 
-<section class="collections">
-  <div class="collections-container">
-    <div class="collections-header">
-      <h2 class="collections-title">Shop by Collection</h2>
-    </div>
-    <div class="collections-grid">
-      @for (collection of collections; track collection.id) {
-        <a href="/" class="collection-card">
-          <div class="collection-image" [style.background]="collection.gradient">
-            <div class="collection-overlay">
-              <span class="collection-count">{{ collection.count }} styles</span>
-            </div>
-          </div>
-          <div class="collection-info">
-            <h3 class="collection-name">{{ collection.name }}</h3>
-          </div>
-        </a>
-      }
-    </div>
-  </div>
+<section class="scroll-filler">
+  <h2>New Arrivals</h2>
+  <p>Scroll down to experience the sticky navbar transition.</p>
 </section>
-<app-footer></app-footer>

@@ -1,0 +1,34 @@
+// SILHOUETTE Preloader Design Tokens
+
+$color-black: #000000;
+$color-white: #ffffff;
+
+// Timing
+$sand-duration: 1.6s;
+$pause-duration: 400ms;
+$flip-duration: 450ms;
+$entrance-duration: 700ms;
+$exit-duration: 900ms;
+
+// Glow
+$glow-opacity-min: 0.08;
+$glow-opacity-max: 0.15;
+$glow-breath-duration: 2s;
+
+// Logo
+$logo-letter-spacing: 12px;
+$logo-font-family: 'Geist Pixel Square', 'Geist Pixel', monospace;
+
+// CRT overlay
+$crt-opacity: 0.04;
+
+// Hourglass scale
+$hourglass-base-size: 88px;
+
+// Z-index layers
+$z-preloader: 10000;
+$z-crt: 10001;
+
+// Breakpoints
+$breakpoint-sm: 320px;
+$breakpoint-4k: 3840px;

@@ -1,4 +1,6 @@
-@if (isLoading()) {
-  <app-app-loader />
-}
-<router-outlet />
+<app-preloader />
+
+<main class="app-main" [class.app-main--visible]="contentVisible()">
+  <app-navbar />
+  <router-outlet />
+</main>

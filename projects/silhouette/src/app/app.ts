@@ -1,21 +1,28 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AppLoader } from './app-loader/app-loader';
+import { PreloaderComponent } from './preloader/preloader.component';
+import { PreloaderService } from './preloader/preloader.service';
+import { NavbarComponent } from './navbar/navbar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, AppLoader],
+  standalone: true,
+  imports: [RouterOutlet, PreloaderComponent, NavbarComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App implements OnInit {
-  protected readonly title = signal('silhouette');
-  protected isLoading = signal(true);
+export class App {
+  private readonly preloaderService = inject(PreloaderService);
 
-  ngOnInit(): void {
-    // Show loader for 3 seconds
-    setTimeout(() => {
-      this.isLoading.set(false);
-    }, 3000);
+  readonly contentVisible = signal(false);
+
+  constructor() {
+    this.preloaderService.initialize();
+
+    effect(() => {
+      if (this.preloaderService.phase() === 'complete') {
+        this.contentVisible.set(true);
+      }
+    });
   }
 }

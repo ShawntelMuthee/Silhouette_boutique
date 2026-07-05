@@ -1,0 +1,16 @@
+.app-main {
+  min-height: 100vh;
+  opacity: 0;
+  transition: opacity 900ms ease-out;
+  will-change: opacity;
+
+  &--visible {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-main {
+    transition: opacity 400ms ease;
+  }
+}

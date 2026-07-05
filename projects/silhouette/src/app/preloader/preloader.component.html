@@ -1,0 +1,65 @@
+@if (visible()) {
+  <div
+    class="preloader"
+    [@preloaderFade]="fadeState()"
+    [@entrance]
+    [class.preloader--reduced]="reducedMotion()"
+    [class.preloader--exiting]="exitGlowBoost()"
+    role="status"
+    aria-label="Loading SILHOUETTE"
+    aria-live="polite"
+  >
+    <canvas #dustCanvas class="preloader__dust" aria-hidden="true"></canvas>
+
+    <div class="preloader__stage">
+      @if (showContent()) {
+        <div
+          class="preloader__hourglass-wrap"
+          [@hourglassEntrance]
+          [class.preloader__hourglass-wrap--flipping]="isFlipping()"
+          [style.transform]="'rotate(' + rotation() + 'deg)'"
+        >
+          <div
+            class="preloader__glow"
+            [style.opacity]="(exitGlowBoost() ? 0.35 : null)"
+            aria-hidden="true"
+          ></div>
+
+          <svg
+            class="preloader__hourglass"
+            [attr.viewBox]="viewBox"
+            shape-rendering="crispEdges"
+            aria-hidden="true"
+          >
+            @for (pixel of framePixels; track $index) {
+              <rect
+                [attr.x]="pixel[0]"
+                [attr.y]="pixel[1]"
+                width="1"
+                height="1"
+                fill="#ffffff"
+              />
+            }
+          </svg>
+
+          <canvas #sandCanvas class="preloader__sand" aria-hidden="true"></canvas>
+        </div>
+
+        <h1
+          class="preloader__logo"
+          [@logoEntrance]
+          appGlitch
+          [appGlitchEnabled]="!reducedMotion() && !exitGlowBoost()"
+        >
+          SILHOUETTE
+        </h1>
+      }
+    </div>
+
+    <div class="preloader__crt" aria-hidden="true">
+      <div class="preloader__scanlines"></div>
+      <div class="preloader__grain"></div>
+      <div class="preloader__vignette"></div>
+    </div>
+  </div>
+}
