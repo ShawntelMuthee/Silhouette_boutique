@@ -18,12 +18,14 @@ body {
 }
 
 body {
-  --sidebar-bg: rgba(119, 7, 55, 0.88);
-  --sidebar-blur: 22px;
-  --sidebar-saturate: 1.2;
+  --sidebar-bg: rgba(88, 5, 40, 0.72);
+  --sidebar-blur: 40px;
+  --sidebar-saturate: 1.6;
   --accent-mint: #AFE1AF;
-  --separator: rgba(255,255,255,.12);
+  --separator: rgba(255, 255, 255, 0.12);
   --font-family: 'Inter', sans-serif;
+  --font-logo: 'Lora', serif;
+  --font-body: 'Raleway', sans-serif;
   overflow-x: hidden;
   overflow-y: auto;
 }

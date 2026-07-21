@@ -14,6 +14,7 @@ import { overlayFade, sidebarSlide, tabSwitch } from './animations';
 export class SidebarComponent {
   isOpen = false;
   activeTab: 'shop' | 'explore' = 'shop';
+  currentYear = new Date().getFullYear();
 
   constructor(private sidebarService: SidebarService) {
     this.sidebarService.isOpen$.subscribe(open => this.isOpen = open);

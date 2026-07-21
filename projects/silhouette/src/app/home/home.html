@@ -1,12 +1,61 @@
-<section class="home">
-  <div class="home__content">
-    <p class="home__eyebrow">Carol's Boutique</p>
-    <h1 class="home__title">SILHOUETTE</h1>
-    <p class="home__tagline">Premium fashion, reimagined.</p>
+<section class="hero-section">
+  <div class="film-grain"></div>
+
+  <!-- Left Side: Content (45%) -->
+  <div class="hero-content">
+    <div class="hero-label">
+      <span class="label-text">EVERYDAY ESSENTIALS</span>
+      <span class="label-divider"></span>
+      <span class="label-text">HAND-PICKED FOR YOU</span>
+    </div>
+
+    <h1 class="hero-title">
+      Designed for
+      <br>
+      every version
+      <br>
+      of you.
+    </h1>
+
+    <button class="hero-cta" (click)="onShopNow()">
+      Shop Now →
+    </button>
+  </div>
+
+  <!-- Right Side: Editorial Image (55%) -->
+  <div class="hero-image-container">
+    @for (img of images; track img.src; let idx = $index) {
+    <img [src]="img.src" [alt]="img.alt" class="hero-image" [class.active]="activeImageIndex() === idx"
+      [attr.loading]="idx === 0 ? 'eager' : 'lazy'" [attr.fetchpriority]="idx === 0 ? 'high' : null" />
+    }
   </div>
 </section>
+<!-- Intentional vertical breathing room (140px) -->
+<div class="hero-spacer"></div>
 
-<section class="scroll-filler">
-  <h2>New Arrivals</h2>
-  <p>Scroll down to experience the sticky navbar transition.</p>
+<section class="new-arrivals-section">
+  <div class="section-container">
+    <div class="section-header">
+      <h2 class="section-title">New Arrivals</h2>
+      <a class="view-all-link" (click)="onViewAllArrivals()">View All →</a>
+    </div>
+    
+    <div class="products-grid">
+      @for (prod of newArrivals; track prod.name) {
+        <div class="product-card" (click)="onSelectProduct(prod.name)">
+          <div class="product-image-wrapper">
+            <img [src]="prod.primaryImg" [alt]="prod.name" class="product-image primary" loading="lazy" />
+            @if (prod.secondaryImg) {
+              <img [src]="prod.secondaryImg" [alt]="prod.name + ' Detail'" class="product-image secondary" loading="lazy" />
+            }
+          </div>
+          
+          <div class="product-info">
+            <h3 class="product-name">{{ prod.name }}</h3>
+            <p class="product-price">{{ prod.price }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
 </section>

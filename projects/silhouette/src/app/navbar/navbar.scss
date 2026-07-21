@@ -1,12 +1,13 @@
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: 70px;
-  background-color: #F9F6EE;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
   z-index: 1000;
-  transition: background-color 400ms ease, backdrop-filter 400ms ease, height 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: all 300ms ease;
 
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-weight: 500;
@@ -15,11 +16,22 @@
   text-transform: uppercase;
   color: #000000;
 
+  // Scrolled state - Mulberry background
   &.scrolled {
     height: 50px;
-    background-color: rgba(249, 246, 238, 0.92);
+    background-color: rgba(88, 5, 40, 0.95);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
+    color: #ffffff;
+
+    .menu-button .line {
+      background-color: #ffffff;
+    }
+
+    .nav-actions .icon-button {
+      color: #ffffff;
+    }
   }
 
   .navbar-container {
