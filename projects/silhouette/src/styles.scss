@@ -11,21 +11,24 @@
 html,
 body {
   height: 100%;
-  background: #F9F6EE;
-  color: #000000;
+  background: #F4EFE7;
+  color: #1A1A1A;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  --sidebar-bg: rgba(88, 5, 40, 0.72);
+  --sidebar-bg: rgba(110, 30, 46, 0.85);
   --sidebar-blur: 40px;
   --sidebar-saturate: 1.6;
-  --accent-mint: #AFE1AF;
-  --separator: rgba(255, 255, 255, 0.12);
+  --accent-burgundy: #6E1E2E;
+  --bg-ivory: #F4EFE7;
+  --text-charcoal: #1A1A1A;
+  --text-warm-gray: #6B6560;
+  --separator: rgba(26, 26, 26, 0.12);
   --font-family: 'Inter', sans-serif;
-  --font-logo: 'Lora', serif;
-  --font-body: 'Raleway', sans-serif;
+  --font-editorial: 'Cormorant Garamond', 'Playfair Display', serif;
+  --font-script: 'Parisienne', cursive;
   overflow-x: hidden;
   overflow-y: auto;
 }

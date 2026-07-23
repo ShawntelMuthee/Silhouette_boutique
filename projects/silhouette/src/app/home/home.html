@@ -1,61 +1,148 @@
+<!-- 1. HERO -->
 <section class="hero-section">
   <div class="film-grain"></div>
+  <div class="hero-gradient-overlay"></div>
 
-  <!-- Left Side: Content (45%) -->
-  <div class="hero-content">
-    <div class="hero-label">
-      <span class="label-text">EVERYDAY ESSENTIALS</span>
-      <span class="label-divider"></span>
-      <span class="label-text">HAND-PICKED FOR YOU</span>
-    </div>
-
-    <h1 class="hero-title">
-      Designed for
-      <br>
-      every version
-      <br>
-      of you.
-    </h1>
-
-    <button class="hero-cta" (click)="onShopNow()">
-      Shop Now →
-    </button>
+  <!-- Hero Background Video -->
+  <div class="hero-bg-container">
+    <video
+      #heroVideo
+      src="assets/HeroSection.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      webkit-playsinline
+      preload="auto"
+      class="hero-bg-video">
+      <source src="assets/HeroSection.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
   </div>
 
-  <!-- Right Side: Editorial Image (55%) -->
-  <div class="hero-image-container">
-    @for (img of images; track img.src; let idx = $index) {
-    <img [src]="img.src" [alt]="img.alt" class="hero-image" [class.active]="activeImageIndex() === idx"
-      [attr.loading]="idx === 0 ? 'eager' : 'lazy'" [attr.fetchpriority]="idx === 0 ? 'high' : null" />
-    }
+  <!-- Bottom Left Editorial Lockup -->
+  <div class="hero-bottom-left-lockup">
+    <div class="hero-top-label">
+      <div class="hero-line-1">EVERYDAY ESSENTIALS <span class="hero-dot">&bull;</span></div>
+      <div class="hero-line-2">HAND-PICKED FOR YOU</div>
+    </div>
+    <div class="hero-actions-row">
+      <img src="assets/logo-wordmark.svg" alt="Silhouette" class="hero-logo-wordmark" />
+      <button class="hero-shop-btn" (click)="onShopNow()">
+        SHOP NOW &rarr;
+      </button>
+    </div>
   </div>
 </section>
-<!-- Intentional vertical breathing room (140px) -->
-<div class="hero-spacer"></div>
 
-<section class="new-arrivals-section">
-  <div class="section-container">
-    <div class="section-header">
-      <h2 class="section-title">New Arrivals</h2>
-      <a class="view-all-link" (click)="onViewAllArrivals()">View All →</a>
+<!-- 2. EDITORIAL BRAND INTRODUCTION (ABOUT SECTION) -->
+<section class="brand-intro-section reveal-on-scroll">
+  <div class="intro-container">
+    <p class="intro-typography">
+      Silhouette is a luxury fashion house bridging timeless heritage into new contexts. We believe in working with what is near: the materials, traditions, and relationships that form our environment. Our direct and meaningful connection to this lifeworld continues to inform how we create and think about luxury fashion.
+    </p>
+  </div>
+</section>
+
+<!-- 3. SHOP BY CATEGORY -->
+<section class="shop-by-category-section reveal-on-scroll">
+  <div class="category-section-header">
+    <h2 class="category-heading">
+      Shop by <span class="handwritten-accent">Category</span>
+    </h2>
+  </div>
+
+  <div class="category-wrapper">
+    <!-- Left Column: Sticky Editorial Image -->
+    <div class="category-image-column">
+      <div class="sticky-image-wrapper">
+        <img [src]="activeCategory().image" [alt]="activeCategory().name" class="sticky-category-img" />
+        <div class="sticky-image-gradient"></div>
+      </div>
     </div>
-    
+
+    <!-- Right Column: Vertical Categories -->
+    <div class="category-content-column">
+      <p class="category-intro-copy">
+        Explore our collections, each designed with purpose and crafted for real life.
+      </p>
+
+      <div class="vertical-categories-list">
+        @for (cat of categories; track cat.slug) {
+          <div class="category-row" 
+               (mouseenter)="onHoverCategory(cat)"
+               (click)="onSelectCategory(cat.slug)"
+               [class.active]="activeCategory().slug === cat.slug">
+            <div class="category-row-top">
+              <span class="cat-num">{{ cat.num }}</span>
+              <h3 class="cat-title">{{ cat.name }}</h3>
+              <span class="cat-arrow">&rarr;</span>
+            </div>
+            <p class="cat-sentence">{{ cat.sentence }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. NEW ARRIVALS -->
+<section class="new-arrivals-section reveal-on-scroll" id="new-arrivals">
+  <div class="arrivals-container">
+    <div class="arrivals-header">
+      <h2 class="arrivals-heading">
+        New <span class="handwritten-accent">Arrivals</span>
+      </h2>
+      <div class="arrivals-view-all-wrapper">
+        <button class="view-all-btn" (click)="onViewAll()">
+          VIEW ALL &rarr;
+        </button>
+      </div>
+    </div>
+
     <div class="products-grid">
       @for (prod of newArrivals; track prod.name) {
         <div class="product-card" (click)="onSelectProduct(prod.name)">
-          <div class="product-image-wrapper">
-            <img [src]="prod.primaryImg" [alt]="prod.name" class="product-image primary" loading="lazy" />
+          <div class="product-media">
+            <img [src]="prod.primaryImg" [alt]="prod.name" class="prod-img primary-img" loading="lazy" />
             @if (prod.secondaryImg) {
-              <img [src]="prod.secondaryImg" [alt]="prod.name + ' Detail'" class="product-image secondary" loading="lazy" />
+              <img [src]="prod.secondaryImg" [alt]="prod.name + ' detail'" class="prod-img secondary-img" loading="lazy" />
             }
-          </div>
-          
-          <div class="product-info">
-            <h3 class="product-name">{{ prod.name }}</h3>
-            <p class="product-price">{{ prod.price }}</p>
+            <!-- Translucent cream strip overlay -->
+            <div class="product-overlay-strip">
+              <span class="prod-price">KSh {{ prod.price }}</span>
+              <span class="prod-title">{{ prod.name }}</span>
+            </div>
           </div>
         </div>
       }
     </div>
+
+    <div class="arrivals-footer">
+      <span class="explore-more-text">
+        Explore <span class="handwritten-accent">More</span>
+      </span>
+    </div>
   </div>
 </section>
+
+<!-- 5. FEATURED CAMPAIGN -->
+<section class="featured-campaign-section reveal-on-scroll">
+  <div class="campaign-container">
+    <div class="campaign-media-wrapper">
+      <img src="assets/hero-images/innerwear.webp" alt="Featured Campaign" class="campaign-image" loading="lazy" />
+      <div class="campaign-overlay"></div>
+      <div class="campaign-content">
+        <span class="campaign-tag">FEATURED CAMPAIGN</span>
+        <h2 class="campaign-title">The Ease of Now</h2>
+        <p class="campaign-text">Pieces for sunlit days and unhurried moments.</p>
+        <button class="campaign-cta" (click)="onDiscoverCampaign()">
+          EXPLORE CAMPAIGN &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. FOOTER -->
+<app-footer></app-footer>

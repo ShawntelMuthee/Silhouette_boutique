@@ -1,97 +1,150 @@
-import { Component, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from '../footer/footer.component';
 
-interface HeroImage {
-  src: string;
-  alt: string;
+interface CategoryItem {
+  num: string;
+  name: string;
+  slug: string;
+  image: string;
+  sentence: string;
+}
+
+interface ProductItem {
+  name: string;
+  price: string;
+  primaryImg: string;
+  secondaryImg?: string;
 }
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FooterComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home implements OnInit, OnDestroy {
-  // Hero images configuration - easily extensible
-  images: HeroImage[] = [
-    { src: 'assets/hero-images/Pajamas.webp', alt: 'Walking through flowers in elegant sleepwear' },
-    { src: 'assets/hero-images/gymwear.webp', alt: 'Relaxed confidence: person in premium gymwear' },
-    { src: 'assets/hero-images/innerwear.webp', alt: 'Cozy luxury bedroom moment in fine innerwear' },
-    { src: 'assets/hero-images/duvets.webp', alt: 'Cozy luxury bedroom with duvets' },
-    { src: 'assets/hero-images/maternity.webp', alt: 'Sunlight filled morning in maternity wear' },
-    //
+export class Home implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('heroVideo') heroVideo!: ElementRef<HTMLVideoElement>;
+
+  categories: CategoryItem[] = [
+    { num: '01', name: 'Sleepwear', slug: 'sleepwear', image: 'assets/hero-images/Pajamas.webp', sentence: 'Soft essentials for slower mornings and quieter evenings.' },
+    { num: '02', name: 'Gymwear', slug: 'gymwear', image: 'assets/hero-images/gymwear.webp', sentence: 'Performance and comfort that move with you.' },
+    { num: '03', name: 'Innerwear', slug: 'innerwear', image: 'assets/hero-images/innerwear.webp', sentence: 'Everyday confidence, from the inside out.' },
+    { num: '04', name: 'Maternity Wear', slug: 'maternity', image: 'assets/hero-images/maternity.webp', sentence: 'Comfort and support for every stage of motherhood.' },
+    { num: '05', name: 'Medical Scrubs', slug: 'scrubs', image: 'assets/hero-images/Scrubs.webp', sentence: 'Functional, comfortable and made for every shift.' },
+    { num: '06', name: 'Bedspread & Duvets', slug: 'bedspread', image: 'assets/hero-images/duvets.webp', sentence: 'Timeless comfort for your favourite space.' }
   ];
 
-  newArrivals = [
+  activeCategory = signal<CategoryItem>(this.categories[0]);
+
+  newArrivals: ProductItem[] = [
     {
-      name: 'Classic Scrub Top',
-      price: '$85',
-      primaryImg: 'assets/products/scrub_top_primary.png',
+      name: 'Classic Satin Pajama Set',
+      price: '4,250',
+      primaryImg: 'assets/hero-images/Pajamas.webp',
       secondaryImg: 'assets/products/scrub_top_secondary.png'
     },
     {
-      name: 'Silk Lounge Trouser',
-      price: '$140',
+      name: 'Ribbed Lounge Set',
+      price: '3,850',
       primaryImg: 'assets/products/lounge_trouser_primary.png',
       secondaryImg: 'assets/products/lounge_trouser_secondary.png'
     },
     {
-      name: 'Ribbed Bralette',
-      price: '$65',
-      primaryImg: 'assets/products/ribbed_bralette_primary.png',
+      name: 'Sculpt Seamless Leggings',
+      price: '3,250',
+      primaryImg: 'assets/hero-images/gymwear.webp',
       secondaryImg: 'assets/products/ribbed_bralette_secondary.png'
     },
     {
-      name: 'Linen Duvet Set',
-      price: '$210',
-      primaryImg: 'assets/products/linen_duvet_primary.webp',
-      secondaryImg: 'assets/products/linen_duvet_secondary.webp'
+      name: 'Silk Slip Dress',
+      price: '2,950',
+      primaryImg: 'assets/hero-images/innerwear.webp',
+      secondaryImg: 'assets/products/linen_duvet_secondary.png'
     }
   ];
 
-  activeImageIndex = signal(0);
-  private rotationInterval: any;
-  private isReducedMotion = false;
+  private observer: IntersectionObserver | null = null;
 
-  ngOnInit() {
-    this.isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    this.preloadImages();
-    this.startImageRotation();
+  constructor(private el: ElementRef) {}
+
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+    this.setupScrollReveal();
+    this.playHeroVideo();
   }
 
   ngOnDestroy() {
-    if (this.rotationInterval) {
-      clearInterval(this.rotationInterval);
+    if (this.observer) {
+      this.observer.disconnect();
     }
   }
 
-  onShopNow() {
-    // Navigate to products page or handle CTA click
-    console.log('Shop Now clicked');
+  private playHeroVideo() {
+    if (this.heroVideo?.nativeElement) {
+      const video = this.heroVideo.nativeElement;
+      video.muted = true;
+      video.playsInline = true;
+      video.play().catch(err => {
+        console.warn('Hero video play prevented:', err);
+      });
+    }
   }
 
-  onViewAllArrivals() {
-    console.log('View All Arrivals clicked');
+  onHoverCategory(cat: CategoryItem) {
+    this.activeCategory.set(cat);
+  }
+
+  onSelectCategory(slug: string) {
+    console.log(`Navigating to category: ${slug}`);
   }
 
   onSelectProduct(productName: string) {
-    console.log(`Product selected: ${productName}`);
+    console.log(`Opening product: ${productName}`);
   }
 
-  private preloadImages() {
-    // Preload future images for perfect performance and smooth transitions
-    this.images.slice(1).forEach(img => {
-      const image = new Image();
-      image.src = img.src;
-    });
+  onShopNow() {
+    const section = document.getElementById('new-arrivals');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
-  private startImageRotation() {
-    // Smooth image change every 8 seconds
-    this.rotationInterval = setInterval(() => {
-      this.activeImageIndex.update(idx => (idx + 1) % this.images.length);
-    }, 8000);
+  onDiscoverCampaign() {
+    console.log('Discover Campaign clicked');
+  }
+
+  onViewAll() {
+    console.log('View All clicked');
+  }
+
+  private setupScrollReveal() {
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+      const targets = this.el.nativeElement.querySelectorAll('.reveal-on-scroll');
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            if (this.observer) {
+              this.observer.unobserve(entry.target);
+            }
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      targets.forEach((target: Element) => {
+        this.observer!.observe(target);
+      });
+    } else {
+      const targets = this.el.nativeElement.querySelectorAll('.reveal-on-scroll');
+      targets.forEach((target: Element) => {
+        target.classList.add('in-view');
+      });
+    }
   }
 }

@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   height: 70px;
-  background-color: transparent;
+  background-color: transparent !important;
   border-bottom: 1px solid transparent;
   z-index: 1000;
   transition: all 300ms ease;
@@ -14,15 +14,23 @@
   letter-spacing: 0.08em;
   font-size: 14px;
   text-transform: uppercase;
-  color: #000000;
+  color: #ffffff;
 
-  // Scrolled state - Mulberry background
+  .menu-button .line {
+    background-color: #ffffff;
+  }
+
+  .nav-actions .icon-button {
+    color: #ffffff;
+  }
+
+  // Scrolled state - Always clear / transparent
   &.scrolled {
-    height: 50px;
-    background-color: rgba(88, 5, 40, 0.95);
-    border-bottom-color: rgba(0, 0, 0, 0.08);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    height: 60px;
+    background-color: transparent !important;
+    border-bottom: 1px solid transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     color: #ffffff;
 
     .menu-button .line {
@@ -81,12 +89,12 @@
     .line {
       width: 100%;
       height: 1.5px;
-      background-color: #000000;
+      background-color: #ffffff;
       transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1), opacity 250ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     &:hover .line {
-      background-color: #770737;
+      opacity: 0.7;
     }
   }
 
@@ -104,6 +112,7 @@
       position: absolute;
       transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1), transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
       will-change: opacity, transform;
+      filter: brightness(0) invert(1);
     }
 
     .logo-wordmark {
@@ -145,14 +154,14 @@
       border: none;
       cursor: pointer;
       padding: 0;
-      color: #000000;
-      transition: color 250ms ease, transform 250ms ease;
+      color: #ffffff;
+      transition: opacity 250ms ease, transform 250ms ease;
       display: flex;
       align-items: center;
       justify-content: center;
 
       &:hover {
-        color: #770737;
+        opacity: 0.7;
         transform: translateY(-2px);
       }
     }
